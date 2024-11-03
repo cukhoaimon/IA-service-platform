@@ -1,4 +1,2 @@
-
-
-rootProject.name="ia03-be"
+rootProject.name = "service-platform"
 

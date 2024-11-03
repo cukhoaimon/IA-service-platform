@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: ia03-be
+    name: service-platform
   server:
     cors:
       enabled: true

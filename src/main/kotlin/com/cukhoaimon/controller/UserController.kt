@@ -7,6 +7,7 @@ import com.cukhoaimon.database.repository.UserRepository
 import com.cukhoaimon.exception.Exceptions
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
@@ -37,7 +38,7 @@ class UserController(
   }
 
   @Secured(SecurityRule.IS_AUTHENTICATED)
-  @Post("/me")
+  @Get("/me")
   fun me(principal: Principal): String = principal.name
 
   private fun getOrThrow(email: String) {
