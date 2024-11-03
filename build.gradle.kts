@@ -27,6 +27,8 @@ dependencies {
   ksp("io.micronaut:micronaut-http-validation")
   ksp("io.micronaut.openapi:micronaut-openapi")
   ksp("io.micronaut.openapi:micronaut-openapi-adoc")
+  compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
+
   ksp("io.micronaut.serde:micronaut-serde-processor")
   implementation("io.micronaut:micronaut-retry")
   implementation("io.micronaut.flyway:micronaut-flyway")
@@ -38,7 +40,6 @@ dependencies {
   implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
   compileOnly("io.micronaut:micronaut-http-client")
-  compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
   runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
   runtimeOnly("org.flywaydb:flyway-database-postgresql")
   runtimeOnly("org.postgresql:postgresql")
@@ -63,16 +64,19 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-json:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-money:$exposedVersion")
 
-//  implementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
-//  implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
-//  implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
-//  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
-//  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
-//  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
-//  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-avro:${jacksonVersion}")
-//
-//  implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
-//  implementation("com.squareup.retrofit2:converter-jackson:${retrofitVersion}")
+  implementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+  implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
+  implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
+  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
+  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-avro:${jacksonVersion}")
+
+  implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+  implementation("com.squareup.retrofit2:converter-jackson:${retrofitVersion}")
+
+  ksp("io.micronaut.serde:micronaut-serde-processor")
+  implementation("io.micronaut.serde:micronaut-serde-jackson")
 
   implementation("io.arrow-kt:arrow-core:$arrowVersion")
   implementation("io.arrow-kt:arrow-fx-coroutines:$arrowVersion")

@@ -39,7 +39,10 @@ class UserController(
 
   @Secured(SecurityRule.IS_AUTHENTICATED)
   @Get("/me")
-  fun me(principal: Principal): String = principal.name
+  fun me(principal: Principal): UserEntity {
+    val email = principal.name
+    return userRepository.findByEmail(email) ?: throw Exceptions.USER_NOT_FOUND.throwable()
+  }
 
   private fun getOrThrow(email: String) {
     val user = userRepository.findByEmail(email)

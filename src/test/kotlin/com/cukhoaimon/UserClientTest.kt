@@ -38,7 +38,7 @@ class UserClientTest : AbstractControllerTest() {
 
     assertDoesNotThrow {
       val userInfo = userClient.me("Bearer ${credentials.accessToken}")
-      assert(userInfo == user.email)
+      assert(userInfo.email == user.email)
     }
   }
 }

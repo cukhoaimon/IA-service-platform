@@ -19,13 +19,10 @@ micronaut:
             - ^http:\/\/([\w-]+\.)*localhost(:[0-9]+)?$
 
   security:
-    intercept-url-map:
-      - pattern: /swagger/**
-        access: isAnonymous()
-      - pattern: /swagger-ui/**
-        access: isAnonymous()
-
     authentication: bearer
+    endpoints:
+      login:
+        enabled: true
     token:
       jwt:
         generator:
@@ -33,13 +30,21 @@ micronaut:
             expiration: ${JWT_TOKEN_EXPIRATION:86400}
           refresh-token:
             secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
-
         signatures:
           secret:
             generator:
               secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
 
-  
+    intercept-url-map:
+      - pattern: /swagger/**
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: /swagger-ui/**
+        httpMethod: GET
+        access:
+          - isAnonymous()
+
   router:
     static-resources:
       swagger:

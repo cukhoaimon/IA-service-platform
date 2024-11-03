@@ -16,5 +16,5 @@ interface UserClient {
   fun register(@Body request: UserRegisterRequest): UserEntity
 
   @Get("/me")
-  fun me(@Header(AUTHORIZATION) authorization: String): String
+  fun me(@Header(AUTHORIZATION) authorization: String): UserEntity
 }
