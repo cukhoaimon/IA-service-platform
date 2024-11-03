@@ -11,12 +11,17 @@ plugins {
 version = "0.1"
 group = "com.cukhoaimon"
 
-val kotlinVersion = project.properties.get("kotlinVersion")
 repositories {
   mavenCentral()
 }
 
+val kotlinVersion = project.properties.get("kotlinVersion")
 val exposedVersion: String by project
+val jacksonVersion: String by project
+val retrofitVersion: String by project
+val arrowVersion: String by project
+val okhttpVersion: String by project
+val reactorVersion: String by project
 
 dependencies {
   ksp("io.micronaut:micronaut-http-validation")
@@ -57,6 +62,28 @@ dependencies {
   implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-json:$exposedVersion")
   implementation("org.jetbrains.exposed:exposed-money:$exposedVersion")
+
+//  implementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+//  implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
+//  implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
+//  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
+//  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
+//  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
+//  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-avro:${jacksonVersion}")
+//
+//  implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+//  implementation("com.squareup.retrofit2:converter-jackson:${retrofitVersion}")
+
+  implementation("io.arrow-kt:arrow-core:$arrowVersion")
+  implementation("io.arrow-kt:arrow-fx-coroutines:$arrowVersion")
+
+  implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+  implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
+  implementation("com.squareup.okhttp3:okhttp-urlconnection:$okhttpVersion")
+  implementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
+
+  implementation("io.projectreactor:reactor-core:$reactorVersion")
+
 }
 
 

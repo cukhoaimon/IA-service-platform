@@ -1,4 +1,4 @@
-CREATE TABLE "user"
+CREATE TABLE "users"
 (
   id         UUID                              DEFAULT gen_random_uuid(),
   email      TEXT                     NOT NULL UNIQUE,

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull
 @Introspected
 data class UserRegisterRequest(
   @field:NotNull
-  val email: String,
+  val username: String,
   @field:NotNull
   val password: String,
 )

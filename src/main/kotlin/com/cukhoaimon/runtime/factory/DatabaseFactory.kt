@@ -1,6 +1,8 @@
 package com.cukhoaimon.runtime.factory
 
+import com.cukhoaimon.database.repository.DefaultRefreshTokenRepository
 import com.cukhoaimon.database.repository.DefaultUserRepository
+import com.cukhoaimon.database.repository.RefreshTokenRepository
 import com.cukhoaimon.database.repository.UserRepository
 import com.cukhoaimon.runtime.config.AppConfiguration
 import io.micronaut.context.annotation.Factory
@@ -22,5 +24,10 @@ class DatabaseFactory {
   @Singleton
   fun provideUserRepository(db: Database): UserRepository {
     return DefaultUserRepository(db)
+  }
+
+  @Singleton
+  fun provideRefreshTokenRepository(db: Database): RefreshTokenRepository {
+    return DefaultRefreshTokenRepository(db)
   }
 }

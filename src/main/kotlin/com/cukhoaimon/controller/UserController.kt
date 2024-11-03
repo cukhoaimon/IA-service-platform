@@ -7,41 +7,38 @@ import com.cukhoaimon.database.repository.UserRepository
 import com.cukhoaimon.exception.Exceptions
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
-import io.micronaut.serde.annotation.SerdeImport
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import java.security.Principal
 
-@SerdeImport(UserRegisterRequest::class)
-@SerdeImport(UserEntity::class)
+@Tag(name = "UserController")
+@Controller("/api/user")
 @ExecuteOn(TaskExecutors.IO)
-@Secured(SecurityRule.IS_ANONYMOUS)
-@Controller("/api/user/register")
-class AuthController(
+class UserController(
   private val userRepository: UserRepository,
   private val passwordManager: PasswordManager,
 ) {
-
-  @Post
-  fun post(@Body @Valid request: UserRegisterRequest): UserEntity {
-    getOrThrow(email = request.email)
+  @Secured(SecurityRule.IS_ANONYMOUS)
+  @Post("/register")
+  fun register(@Body @Valid request: UserRegisterRequest): UserEntity {
+    getOrThrow(email = request.username)
 
     return userRepository.insert(
       UserEntity(
-        email = request.email,
+        email = request.username,
         password = passwordManager.hash(request.password)
       )
     )
   }
 
-  @Get()
-  fun getAll(): List<UserEntity> {
-    return userRepository.listAll()
-  }
+  @Secured(SecurityRule.IS_AUTHENTICATED)
+  @Post("/me")
+  fun me(principal: Principal): String = principal.name
 
   private fun getOrThrow(email: String) {
     val user = userRepository.findByEmail(email)
