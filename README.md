@@ -1,15 +1,39 @@
-## Micronaut 4.6.3 Documentation
+## Project
 
-- [User Guide](https://docs.micronaut.io/4.6.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.6.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.6.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
+- Kotlin
+- Micronaut
+- PostgresSQL
+- Docker Compose
 
----
+## How to run using Intellij
+
+1. Start docker compose
+
+```shell
+docker-compose up -d 
+```
+
+2. Build Project
+
+```shell
+./gradlew build 
+```
+
+3. Run Project
+
+```shell
+./gradlew run 
+```
+
+4. Run test (optional)
+
+```shell
+./gradlew test 
+```
 
 ## Documentation
 
-Build and run the `api` project should also generate `swagger` spec from Micronaut annotations at:
+Build and run the `service-platform` project should also generate `swagger` spec from Micronaut annotations at:
 
 - Swagger http://localhost:8080/swagger/views/swagger-ui/index.html
 - Rapidoc http://localhost:8080/swagger/views/rapidoc/index.html
