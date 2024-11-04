@@ -6,6 +6,9 @@ micronaut:
       enabled: true
       configurations:
         web:
+          allowed-headers:
+            - Content-Type
+            - Authorization
           allowedMethods:
             - GET
             - OPTIONS
@@ -14,9 +17,8 @@ micronaut:
             - DELETE
             - PATCH
           allowedOrigins:
-            - ${ALLOWED_ORIGIN:}
-            - ^http:\/\/localhost(:[0-9]+)?$
-            - ^http:\/\/([\w-]+\.)*localhost(:[0-9]+)?$
+            - "http://localhost:5173"
+            - ${ALLOWED_ORIGIN:http://localhost:5173}
 
   security:
     authentication: bearer
