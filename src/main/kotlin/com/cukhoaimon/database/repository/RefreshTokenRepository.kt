@@ -2,7 +2,6 @@ package com.cukhoaimon.database.repository
 
 import com.cukhoaimon.database.entity.RefreshTokenEntity
 import com.cukhoaimon.database.table.RefreshTokenTable
-import java.util.UUID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -13,9 +12,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 interface RefreshTokenRepository {
   fun insert(refreshToken: RefreshTokenEntity): RefreshTokenEntity
-  fun byUserId(userId: UUID): RefreshTokenEntity?
+  fun byIdentity(identity: String): RefreshTokenEntity?
   fun byToken(token: String): RefreshTokenEntity?
-  fun deleteByUserId(userId: UUID): Boolean
+  fun deleteByIdentity(identity: String): Boolean
 }
 
 class DefaultRefreshTokenRepository(
@@ -24,7 +23,8 @@ class DefaultRefreshTokenRepository(
   override fun insert(refreshToken: RefreshTokenEntity): RefreshTokenEntity {
     return transaction(database) {
       RefreshTokenTable.insert {
-        it[userId] = refreshToken.userId
+        it[id] = refreshToken.id
+        it[identity] = refreshToken.identity
         it[token] = refreshToken.token
         it[createdAt] = refreshToken.createdAt
       }
@@ -33,10 +33,10 @@ class DefaultRefreshTokenRepository(
     }
   }
 
-  override fun byUserId(userId: UUID): RefreshTokenEntity? {
+  override fun byIdentity(identity: String): RefreshTokenEntity? {
     return transaction(database) {
       RefreshTokenTable.selectAll()
-        .where { RefreshTokenTable.userId eq userId }
+        .where { RefreshTokenTable.identity eq identity }
         .firstOrNull()
     }?.toRefreshTokenEntity()
   }
@@ -49,10 +49,10 @@ class DefaultRefreshTokenRepository(
     }?.toRefreshTokenEntity()
   }
 
-  override fun deleteByUserId(userId: UUID): Boolean {
+  override fun deleteByIdentity(identity: String): Boolean {
     val rowEffected = transaction(database) {
       RefreshTokenTable.deleteWhere {
-        RefreshTokenTable.userId eq userId
+        RefreshTokenTable.identity eq identity
       }
     }
 
@@ -62,7 +62,8 @@ class DefaultRefreshTokenRepository(
 
 fun ResultRow.toRefreshTokenEntity(): RefreshTokenEntity {
   return RefreshTokenEntity(
-    userId = this[RefreshTokenTable.userId],
+    id = this[RefreshTokenTable.id].value,
+    identity = this[RefreshTokenTable.identity],
     token = this[RefreshTokenTable.token],
     createdAt = this[RefreshTokenTable.createdAt],
   )

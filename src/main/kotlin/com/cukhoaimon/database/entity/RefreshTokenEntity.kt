@@ -6,7 +6,8 @@ import java.util.UUID
 
 @Introspected
 data class RefreshTokenEntity(
-  val userId: UUID,
+  val id: UUID = UUID.randomUUID(),
+  val identity: String,
   val token: String,
   val createdAt: Instant = Instant.now(),
 )

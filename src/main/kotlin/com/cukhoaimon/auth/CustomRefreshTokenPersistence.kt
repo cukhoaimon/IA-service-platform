@@ -20,18 +20,16 @@ class CustomRefreshTokenPersistence(
 ) : RefreshTokenPersistence {
 
   override fun persistToken(event: RefreshTokenGeneratedEvent?) {
-    if (event?.refreshToken != null && event.authentication?.name != null) {
+    if (event?.refreshToken == null || event.authentication?.name == null) {
       return
     }
 
-    userRepository.findByEmail(event?.authentication?.name!!)?.let { user ->
-      refreshTokenRepository.insert(
-        RefreshTokenEntity(
-          userId = user.id,
-          token = event.refreshToken
-        )
+    refreshTokenRepository.insert(
+      RefreshTokenEntity(
+        identity = event.authentication?.name!!,
+        token = event.refreshToken
       )
-    }
+    )
   }
 
   override fun getAuthentication(refreshToken: String): Publisher<Authentication> {
@@ -41,7 +39,7 @@ class CustomRefreshTokenPersistence(
         emitter.error(OauthErrorResponseException(INVALID_GRANT, "refresh token not found", null))
       }
 
-      val user = tokenOpt?.let { userRepository.findById(it.userId) }
+      val user = tokenOpt?.let { userRepository.findByEmail(it.identity) }
       user?.let {
         emitter.next(Authentication.build(it.email))
         emitter.complete()
